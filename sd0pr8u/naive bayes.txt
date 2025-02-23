@@ -1,0 +1,57 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import confusion_matrix
+import seaborn as sns
+data = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/iris-data.csv")
+data.head()
+
+data.shape
+
+data.head()
+
+data.tail()
+
+data.info()
+
+data.describe()
+
+data.isnull().sum()
+
+xtrain, xtest, ytrain, ytest =train_test_split(X,Y,test_size= 0.25, random_state=0)
+
+model = LogisticRegression(solver = 'lbfgs')
+
+model = GaussianNB()
+model = model.fit(xtrain,ytrain)
+ypred = model.predict(xtest)
+
+cm = confusion_matrix(ytest, ypred)
+sns.heatmap(cm, annot=True)
+plt.show()
+
+from sklearn.metrics import classification_report
+
+print(classification_report(ytest, ypred))
+
+
+
+#remove outliers
+sns.boxplot(y = df['Second year:   Sem 1'])
+Q1 = df['Second year:   Sem 1'].quantile(0.25)
+Q3 = df['Second year:   Sem 1'].quantile(0.75)
+IQR = Q3 - Q1
+lower_bound = Q1 - 1.5 * IQR
+upper_bound = Q3 + 1.5 * IQR
+df_filtered = df[(df['Second year:   Sem 1'] > lower_bound) & (df['Second year:   Sem 1'] < upper_bound)]
+sns.boxplot(y = df_filtered['Second year:   Sem 1'])
+
+
+
+
+
+accuracy: TP+TN/TP+TN+FP+FN
+precision: TP/TP+FP
+recall; TP/TP+FN

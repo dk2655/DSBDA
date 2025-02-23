@@ -1,0 +1,73 @@
+# Import the required libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt 
+import seaborn as sns
+%matplotlib inline
+
+# Read the csv file
+data = pd.read_csv("tecdiv.csv")
+data
+
+print("The first five rows are as follows: ")
+data.head()
+
+print("The last five rows are as follows: ")
+data.tail()
+
+# Describtion about the dataset
+data.describe()
+
+# Information about the dataset
+data.info()
+
+print("The column names of the dataset are as follows: ")
+data.columns
+
+data.isnull().sum()
+
+sns.boxplot(y=data['First year:   Sem 1'])
+
+sns.boxplot(y=data['First year:   Sem 2'])
+
+sns.boxplot(y=data["Second year:   Sem 1"])
+
+sns.boxplot(y=data["Second year:   Sem 2"])
+
+
+#to remove the outliers
+
+import numpy as np
+column_data = data["Second year:   Sem 2"]
+
+Q1 = np.percentile(column_data, 25)
+Q3 = np.percentile(column_data, 75)
+
+IQR = Q3 - Q1
+
+lower_bound = Q1 - 1.5 * IQR
+upper_bound = Q3 + 1.5 * IQR
+
+filtered_data = column_data[(column_data >= lower_bound) & (column_data <= upper_bound)]
+sns.boxplot(y=filtered_data)
+
+#transformation
+
+import pandas as pd
+import numpy as np
+
+data['Second year:   Sem 1'] = np.log(data['Second year:   Sem 1'])
+
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(12, 6))
+plt.subplot(1, 2, 1)
+plt.hist(data['Second year:   Sem 1'], bins=30)
+plt.title('Income Distribution (Original)')
+
+plt.subplot(1, 2, 2)
+plt.hist(data['Second year:   Sem 1'], bins=30)
+plt.title('Income Distribution (Log-Transformed)')
+
+plt.show()
+
